@@ -9,6 +9,8 @@ OJBench is a comprehensive and challenging benchmark specifically designed to as
 
 ## 🔥News
 
+- *2025-7*：We are in the process of building our leaderboard.
+
 - *2025-7*: We have open-sourced our evaluation code and are continually improving it.
 
 - *2025-6*: We have released the OJBench dataset and our paper.
