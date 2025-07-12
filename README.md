@@ -2,8 +2,8 @@
     <a href="https://arxiv.org/pdf/2506.16395">
         <img alt="Static Badge" src="https://img.shields.io/badge/Paper-Arxiv-red">
     </a>
-    <a href="https://huggingface.co/datasets/KbsdJames/Omni-MATH">
-        <img alt="Static Badge" src="https://img.shields.io/badge/HFDataset-OmniMATH-yellow">
+    <a href="https://huggingface.co/datasets/He-Ren/OJBench_testdata">
+        <img alt="Static Badge" src="https://img.shields.io/badge/HFDataset-OJBench-yellow">
     </a>
     <a href="https://huggingface.co/KbsdJames/Omni-Judge">
         <img alt="Static Badge" src="https://img.shields.io/badge/OmniJudge-OmniMATH-yellow">
