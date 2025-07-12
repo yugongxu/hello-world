@@ -5,18 +5,6 @@
     <a href="https://huggingface.co/datasets/He-Ren/OJBench_testdata">
         <img alt="Static Badge" src="https://img.shields.io/badge/HFDataset-OJBench-yellow">
     </a>
-    <a href="https://huggingface.co/KbsdJames/Omni-Judge">
-        <img alt="Static Badge" src="https://img.shields.io/badge/OmniJudge-OmniMATH-yellow">
-    </a>
-    <a href="https://huggingface.co/KbsdJames/Omni-Judge">
-        <img alt="Static Badge" src="https://img.shields.io/badge/Github-Rule_based_Eval-black">
-    </a>
-    <a href="https://omni-math.github.io/">
-        <img alt="Static Badge" src="https://img.shields.io/badge/ProjectPage-Online-blue">
-    </a>
-    <a href="https://www.qbitai.com/2024/09/193751.html">
-        <img alt="Static Badge" src="https://img.shields.io/badge/Report-Qbitai-green">
-    </a>
 </p>
 
 ## 🔥News
