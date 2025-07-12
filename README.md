@@ -39,14 +39,14 @@
 > 🔄 **Open-Source vs Closed-Source Gap**  
 > Open-source models were observed to still lag behind closed-source models in terms of code reasoning ability.
 
-> 💬 **C++ Performance Advantage**  
+> ⚡ **C++ Performance Advantage**  
 > For most long-chain-of-thought (CoT) models, using C++ resulted in better performance compared to Python.
 
-> 🔄 **Feedback Utilization**  
+> 🛠️ **Feedback Utilization**  
 > Models are capable of leveraging feedback from the code execution environment to refine their erroneous solutions.
 
-> 📄 **For More Details**
-> Please refer to the full paper for in-depth experimental design, evaluation metrics, and comprehensive analysis.
+> 📄 **For More Details**  
+> Please refer to the full paper for experimental design, evaluation metrics, and comprehensive analysis.
 
 ------
 
