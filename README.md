@@ -1,3 +1,5 @@
+## Introduction
+*OJBench is a comprehensive and challenging benchmark specifically designed to assess LLMs’ code-reasoning capabilities at the competition level. Our dataset focuses exclusively on human programming contests and comprises 232 rigorously-selected competition problems sourced from China’s National Olympiad in Informatics (NOI) and the International Collegiate Programming Contest (ICPC). These problems are meticulously classified into three difficulty tiers—Easy, Medium, and Hard—derived from contestant voting and real-world submission statistics, and span across bilingual evaluation in both Python and C++.We evaluate numerous models on OJBench, covering open-source/closed-source, reasoning/non-reasoning, 7 B–671 B models.*
 <p align="center">
     <a href="https://arxiv.org/pdf/2506.16395">
         <img alt="Static Badge" src="https://img.shields.io/badge/Paper-Arxiv-red">
@@ -7,13 +9,13 @@
     </a>
 </p>
 
+
 ## 🔥News
 
 - *2025-7*: We have open-sourced our evaluation code and are continually improving it.
 
 - *2025-6*: We have released the OJBench dataset and our paper.
 
-*OJBench is a comprehensive and challenging benchmark specifically designed to assess LLMs’ code-reasoning capabilities at the competition level. Our dataset focuses exclusively on human programming contests and comprises 232 rigorously-selected competition problems sourced from China’s National Olympiad in Informatics (NOI) and the International Collegiate Programming Contest (ICPC). These problems are meticulously classified into three difficulty tiers—Easy, Medium, and Hard—derived from contestant voting and real-world submission statistics, and span across bilingual evaluation in both Python and C++.We evaluate numerous models on OJBench, covering open-source/closed-source, reasoning/non-reasoning, 7 B–671 B models.*
 
 ## Key Findings: Performance of State-of-the-Art Models
 
