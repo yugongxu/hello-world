@@ -27,26 +27,31 @@
 
 *OJBench is a comprehensive and challenging benchmark specifically designed to assess LLMs’ code-reasoning capabilities at the competition level. Our dataset focuses exclusively on human programming contests and comprises 232 rigorously-selected competition problems sourced from China’s National Olympiad in Informatics (NOI) and the International Collegiate Programming Contest (ICPC). These problems are meticulously classified into three difficulty tiers—Easy, Medium, and Hard—derived from contestant voting and real-world submission statistics, and span across bilingual evaluation in both Python and C++.We evaluate numerous models on OJBench, covering open-source/closed-source, reasoning/non-reasoning, 7 B–671 B models.*
 
-
 ## Key Findings: Performance of State-of-the-Art Models
 
 > ⚠️ **State-of-the-Art Models Struggle**  
-> Even advanced reasoning-oriented models, such as o4-mini and Gemini-2.5-pro-exp, struggle with highly challenging competition-level problems.
+> Even advanced reasoning-oriented models, such as o4-mini and Gemini-2.5-pro-exp, struggle with highly challenging competition-level problems.  
+> ![Background Color](https://via.placeholder.com/150)
 
 > 📈 **Reasoning Models Outperform**  
-> Reasoning-oriented models significantly outperformed non-reasoning-oriented models in competitive coding tasks.
+> Reasoning-oriented models significantly outperformed non-reasoning-oriented models in competitive coding tasks.  
+> ![Background Color](https://via.placeholder.com/150)
 
 > 🔄 **Open-Source vs Closed-Source Gap**  
-> Open-source models were observed to still lag behind closed-source models in terms of code reasoning ability.
+> Open-source models were observed to still lag behind closed-source models in terms of code reasoning ability.  
+> ![Background Color](https://via.placeholder.com/150)
 
 > ⚡ **C++ Performance Advantage**  
-> For most long-chain-of-thought (CoT) models, using C++ resulted in better performance compared to Python.
+> For most long-chain-of-thought (CoT) models, using C++ resulted in better performance compared to Python.  
+> ![Background Color](https://via.placeholder.com/150)
 
 > 🛠️ **Feedback Utilization**  
-> Models are capable of leveraging feedback from the code execution environment to refine their erroneous solutions.
+> Models are capable of leveraging feedback from the code execution environment to refine their erroneous solutions.  
+> ![Background Color](https://via.placeholder.com/150)
 
 > 📄 **For More Details**  
 > Please refer to the full paper for experimental design, evaluation metrics, and comprehensive analysis.
+
 
 ------
 
