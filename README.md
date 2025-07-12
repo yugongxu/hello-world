@@ -37,13 +37,14 @@
 
 ------
 
-## Prerequisites
+## Usage
+### Prerequisites
 
 Ensure you have Python 3.10+ installed, along with Git.
 
 ---
 
-## 1. Install DMOJ
+### 1. Install DMOJ
 
 Clone the DMOJ repository, check out the specific commit, and install it:
 
@@ -61,7 +62,7 @@ pip install .
 
 ---
 
-## 2. Install OJBench
+### 2. Install OJBench
 
 Clone the OJBench library and install it in editable mode:
 
@@ -76,7 +77,7 @@ pip install .
 
 ---
 
-## 3. Download Test Data
+### 3. Download Test Data
 
 Test inputs are hosted on Hugging Face under `He-Ren/OJBench_testdata`. You can clone with Git LFS. Ensure Git LFS is installed (`git lfs install`), then run:
 
@@ -84,14 +85,27 @@ Test inputs are hosted on Hugging Face under `He-Ren/OJBench_testdata`. You can 
   git clone https://huggingface.co/He-Ren/OJBench_testdata
   ```
 
----
+### 4. Usage / Testing
 
-## 4. Usage / Testing
-
-### Initialization
+#### Initialization
 
 Use the `init` function to set up the judging environment. Provide one or more problem directories (for example, `data/NOI` and `data/ICPC`).
 
-### Running Judging on JSONL Input
+#### Running Judging on JSONL Input
 
 To evaluate submissions in batch, call `judge_jsonl_data`
+
+
+## 💬 Citation
+If you find our work interesting and meaningful, welcome to give a 🌟 to our repo and cite our paper.
+```
+@misc{wang2025ojbenchcompetitionlevelcode,
+      title={OJBench: A Competition Level Code Benchmark For Large Language Models}, 
+      author={Zhexu Wang and Yiping Liu and Yejie Wang and Wenyang He and Bofei Gao and Muxi Diao and Yanxu Chen and Kelin Fu and Flood Sung and Zhilin Yang and Tianyu Liu and Weiran Xu},
+      year={2025},
+      eprint={2506.16395},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2506.16395}, 
+}
+```
