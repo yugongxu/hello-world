@@ -1,13 +1,10 @@
+# OJBench
+Official repository for the paper "OJBench: A Competition Level Code Benchmark For Large Language Models"Official repository for the paper "[OJBench: A Competition Level Code Benchmark For Large Language Models"]((https://arxiv.org/pdf/2506.16395))
+
+
 ## Introduction
-*OJBench is a comprehensive and challenging benchmark specifically designed to assess LLMs’ code-reasoning capabilities at the competition level. Our dataset focuses exclusively on human programming contests and comprises 232 rigorously-selected competition problems sourced from China’s National Olympiad in Informatics (NOI) and the International Collegiate Programming Contest (ICPC). These problems are meticulously classified into three difficulty tiers—Easy, Medium, and Hard—derived from contestant voting and real-world submission statistics, and span across bilingual evaluation in both Python and C++.We evaluate numerous models on OJBench, covering open-source/closed-source, reasoning/non-reasoning, 7 B–671 B models.*
-<p align="center">
-    <a href="https://arxiv.org/pdf/2506.16395">
-        <img alt="Static Badge" src="https://img.shields.io/badge/Paper-Arxiv-red">
-    </a>
-    <a href="https://huggingface.co/datasets/He-Ren/OJBench_testdata">
-        <img alt="Static Badge" src="https://img.shields.io/badge/HFDataset-OJBench-yellow">
-    </a>
-</p>
+OJBench is a comprehensive and challenging benchmark specifically designed to assess LLMs’ code-reasoning capabilities at the competition level. Our dataset focuses exclusively on human programming contests and comprises 232 rigorously-selected competition problems sourced from China’s National Olympiad in Informatics (NOI) and the International Collegiate Programming Contest (ICPC). These problems are meticulously classified into three difficulty tiers—Easy, Medium, and Hard—derived from contestant voting and real-world submission statistics, and span across bilingual evaluation in both Python and C++.We evaluate numerous models on OJBench, covering open-source/closed-source, reasoning/non-reasoning, 7 B–671 B models.
+
 
 
 ## 🔥News
