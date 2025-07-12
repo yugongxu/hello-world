@@ -29,29 +29,35 @@
 
 ## Key Findings: Performance of State-of-the-Art Models
 
-> ⚠️ **State-of-the-Art Models Struggle**  
-> Even advanced reasoning-oriented models, such as o4-mini and Gemini-2.5-pro-exp, struggle with highly challenging competition-level problems.  
-> ![Background Color](https://via.placeholder.com/150)
+<div style="background-color: #ffebee; padding: 10px; border-radius: 5px;">
+  <h4>⚠️ State-of-the-Art Models Struggle</h4>
+  <p>Even advanced reasoning-oriented models, such as o4-mini and Gemini-2.5-pro-exp, struggle with highly challenging competition-level problems.</p>
+</div>
 
-> 📈 **Reasoning Models Outperform**  
-> Reasoning-oriented models significantly outperformed non-reasoning-oriented models in competitive coding tasks.  
-> ![Background Color](https://via.placeholder.com/150)
+<div style="background-color: #e8f5e9; padding: 10px; border-radius: 5px;">
+  <h4>📈 Reasoning Models Outperform</h4>
+  <p>Reasoning-oriented models significantly outperformed non-reasoning-oriented models in competitive coding tasks.</p>
+</div>
 
-> 🔄 **Open-Source vs Closed-Source Gap**  
-> Open-source models were observed to still lag behind closed-source models in terms of code reasoning ability.  
-> ![Background Color](https://via.placeholder.com/150)
+<div style="background-color: #fffde7; padding: 10px; border-radius: 5px;">
+  <h4>🔄 Open-Source vs Closed-Source Gap</h4>
+  <p>Open-source models were observed to still lag behind closed-source models in terms of code reasoning ability.</p>
+</div>
 
-> ⚡ **C++ Performance Advantage**  
-> For most long-chain-of-thought (CoT) models, using C++ resulted in better performance compared to Python.  
-> ![Background Color](https://via.placeholder.com/150)
+<div style="background-color: #e1f5fe; padding: 10px; border-radius: 5px;">
+  <h4>⚡ C++ Performance Advantage</h4>
+  <p>For most long-chain-of-thought (CoT) models, using C++ resulted in better performance compared to Python.</p>
+</div>
 
-> 🛠️ **Feedback Utilization**  
-> Models are capable of leveraging feedback from the code execution environment to refine their erroneous solutions.  
-> ![Background Color](https://via.placeholder.com/150)
+<div style="background-color: #f3e5f5; padding: 10px; border-radius: 5px;">
+  <h4>🛠️ Feedback Utilization</h4>
+  <p>Models are capable of leveraging feedback from the code execution environment to refine their erroneous solutions.</p>
+</div>
 
-> 📄 **For More Details**  
-> Please refer to the full paper for experimental design, evaluation metrics, and comprehensive analysis.
-
+<div style="background-color: #f5f5f5; padding: 10px; border-radius: 5px;">
+  <h4>📄 For More Details</h4>
+  <p>Please refer to the full paper for experimental design, evaluation metrics, and comprehensive analysis.</p>
+</div>
 
 ------
 
