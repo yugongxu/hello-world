@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OJBench Leaderboard</title>
     <style>
-        /* 基础样式 */
+        /* Base Styles */
         body {
             font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #f8f9fa;
             padding: 20px;
-            color: #333;
+            color: #222;
             display: flex;
             justify-content: center;
         }
 
         .container {
             width: 100%;
-            max-width: 1100px;
+            max-width: 1100px; /* Controls total width */
             background: white;
             padding: 30px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
@@ -26,27 +26,28 @@
 
         h1 {
             text-align: center;
-            margin-bottom: 25px;
-            font-size: 28px;
-            font-weight: 600;
+            margin-bottom: 30px;
+            font-size: 32px; /* Larger Title */
+            font-weight: 700;
+            color: #111;
         }
 
-        /* 按钮组样式 */
+        /* Button Group */
         .btn-group {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 25px;
+            gap: 20px;
+            margin-bottom: 30px;
         }
 
         .toggle-btn {
-            padding: 10px 24px;
+            padding: 12px 30px;
             border: 2px solid #e0e0e0;
             background: white;
             color: #555;
             border-radius: 30px;
             cursor: pointer;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
             transition: all 0.2s ease;
         }
@@ -62,67 +63,78 @@
             border-color: #222;
         }
 
-        /* 表格样式 - 学术风格 */
+        /* Table Styles */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 15px;
+            font-size: 16px; /* Larger font for data */
             text-align: center;
         }
 
+        /* Header Styling */
         thead th {
             font-weight: 700;
-            padding: 12px 8px;
+            padding: 15px 10px;
             background-color: #fff;
+            font-size: 18px; /* Larger font for headers */
         }
 
-        /* 顶部粗线 */
         thead tr:first-child th {
             border-top: 2px solid #000;
         }
 
-        /* 表头底部分割线 */
         thead tr:last-child th {
-            border-bottom: 1px solid #000;
+            border-bottom: 2px solid #000; /* Distinct header bottom */
         }
 
+        /* Column Width & Alignment */
         th.model-col, td.model-name {
             text-align: left;
-            padding-left: 15px;
-            min-width: 200px;
+            padding-left: 10px;
+            width: 25%; /* Limit width to reduce gap */
+            white-space: nowrap;
         }
 
-        tbody tr td {
-            padding: 10px 8px;
-            color: #444;
+        /* Row Styling */
+        tbody tr {
+            border-bottom: 1px solid #ddd; /* Distinct row lines */
         }
-
-        /* 偶数行斑马纹，增加可读性 */
-        tbody tr:nth-child(even) {
-            background-color: #fcfcfc;
-        }
-
-        tbody tr:hover {
-            background-color: #f0f4f8;
-        }
-
-        /* 底部粗线 */
-        tbody tr:last-child td {
+        
+        tbody tr:last-child {
             border-bottom: 2px solid #000;
         }
 
-        /* 分数高亮逻辑 (可选) */
+        tbody tr td {
+            padding: 14px 10px;
+            color: #333;
+        }
+
+        tbody tr:hover {
+            background-color: #f2f2f2; /* Hover effect */
+        }
+
+        /* Data Formatting */
         .score-cell {
-            font-feature-settings: "tnum"; /* 表格数字等宽 */
+            font-feature-settings: "tnum";
+            font-weight: 500;
         }
 
         .empty-data {
             color: #ccc;
         }
-
-        /* 响应式滚动 */
-        .table-responsive {
-            overflow-x: auto;
+        
+        /* Rank Badge */
+        .rank-badge {
+            display: inline-block;
+            width: 20px;
+            color: #888;
+            font-size: 14px;
+            margin-right: 8px;
+            text-align: right;
         }
     </style>
 </head>
@@ -131,83 +143,101 @@
 <div class="container">
     <h1>OJBench Leaderboard</h1>
 
-    <!-- 切换按钮 -->
+    <!-- Toggle Buttons (English) -->
     <div class="btn-group">
         <button class="toggle-btn active" onclick="switchView('overall')" id="btn-overall">
-            总体表现 (Pass@)
+            Overall (Pass@)
         </button>
         <button class="toggle-btn" onclick="switchView('difficulty')" id="btn-difficulty">
-            难度细分 (Pass Rate)
+            By Difficulty (Pass Rate)
         </button>
     </div>
 
     <div class="table-responsive">
         <table id="leaderboard-table">
             <thead id="table-head">
-                <!-- 表头通过JS动态生成 -->
+                <!-- Headers injected via JS -->
             </thead>
             <tbody id="table-body">
-                <!-- 数据通过JS动态生成 -->
+                <!-- Data injected via JS -->
             </tbody>
         </table>
     </div>
 </div>
 
 <script>
-    // ================= 数据源配置 =================
-    
-    // 所有的模型名称（保持两张表的顺序一致）
-    const modelNames = [
-        "GLM-4.7",
-        "GLM-5",
-        "doubao-seed-2.0-pro",
-        "doubao-seed-2.0-code-preview",
-        "Minimax-m2.1",
-        "Minimax-m2.5",
-        "DeepSeek-v3.2",
-        "Kimi-2.5-thinking",
-        "claude-opus-4.6-thinking",
-        "Gemini-3.0-pro" // 修正了拼写
+    // ================= DATA SOURCE =================
+    // Combined data structure for easier sorting
+    // overall: [Py@1, Py@8, Cpp@1, Cpp@8]
+    // difficulty: [Py_Easy, Py_Med, Py_Hard, Cpp_Easy, Cpp_Med, Cpp_Hard]
+    const rawData = [
+        {
+            name: "GLM-4.7",
+            overall: ["50.11", "67.67", "50.75", "68.10"],
+            difficulty: ["92.71", "70.73", "23.08", "93.06", "75.16", "21.26"]
+        },
+        {
+            name: "GLM-5",
+            overall: ["55.01", "71.12", "54.88", "71.55"],
+            difficulty: ["90.62", "75.63", "30.13", "94.10", "77.69", "27.38"]
+        },
+        {
+            name: "doubao-seed-2.0-pro",
+            overall: ["47.22", "59.05", "54.86", "68.10"],
+            difficulty: ["94.44", "77.69", "27.04", "92.71", "68.04", "19.04"]
+        },
+        // {
+        //     name: "doubao-seed-2.0-code-preview",
+        //     overall: [null, null, null, null],
+        //     difficulty: [null, null, null, null, null, null]
+        // },
+        {
+            name: "Minimax-m2.1",
+            overall: ["38.42", "55.17", "45.15", "63.79"],
+            difficulty: ["88.19", "56.01", "11.22", "88.54", "64.87", "18.48"]
+        },
+        {
+            name: "Minimax-m2.5",
+            overall: ["38.09", "53.88", "41.38", "59.48"],
+            difficulty: ["85.07", "58.86", "9.62",  "87.50", "59.65", "14.85"]
+        },
+        {
+            name: "DeepSeek-v3.2",
+            overall: ["48.38", "64.66", "51.72", "69.83"],
+            difficulty: ["90.97", "69.94", "20.73", "91.67", "75.16", "23.61"]
+        },
+        {
+            name: "Kimi-2.5-thinking",
+            overall: ["54.74", "72.84", "56.95", "74.14"],
+            difficulty: ["93.06", "73.89", "30.02", "93.40", "77.69", "31.73"]
+        },
+        {
+            name: "claude-opus-4.6-thinking",
+            overall: ["60.27", "72.84", "67.15", "76.72"],
+            difficulty: ["92.01", "85.58", "33.44", "93.06", "86.85", "45.88"]
+        },
+        {
+            name: "Gemini-3.0-pro",
+            overall: ["58.84", "71.98", "69.99", "79.74"],
+            difficulty: ["91.67", "82.44", "32.80", "95.14", "89.87", "48.82"]
+        }
     ];
 
-    // 数据视图 1: 总体 (Pass@1, Pass@8) - 对应截图 1
-    const overallData = [
-        ["50.11", "67.67", "50.75", "68.10"], // GLM-4.7
-        ["55.01", "71.12", "54.88", "71.55"], // GLM-5
-        ["47.22", "59.05", "54.86", "68.10"], // doubao-pro
-        [null, null, null, null],             // doubao-preview (空)
-        ["38.42", "55.17", "45.15", "63.79"], // Minimax-m2.1
-        ["38.09", "53.88", "41.38", "59.48"], // Minimax-m2.5
-        ["48.38", "64.66", "51.72", "69.83"], // DeepSeek-v3.2
-        ["54.74", "72.84", "56.95", "74.14"], // Kimi
-        ["60.27", "72.84", "67.15", "76.72"], // Claude
-        ["58.84", "71.98", "69.99", "79.74"]  // Gemini
-    ];
+    // ================= SORTING LOGIC =================
+    // Sort by Cpp Pass@1 (Index 2 in overall array) descending
+    const sortedData = rawData.sort((a, b) => {
+        const scoreA = a.overall[2] ? parseFloat(a.overall[2]) : -1;
+        const scoreB = b.overall[2] ? parseFloat(b.overall[2]) : -1;
+        return scoreB - scoreA;
+    });
 
-    // 数据视图 2: 难度 (Easy, Med, Hard) - 对应截图 2
-    // 顺序: Py Easy, Py Med, Py Hard, Cpp Easy, Cpp Med, Cpp Hard
-    const difficultyData = [
-        ["92.71", "70.73", "23.08", "93.06", "75.16", "21.26"], // GLM-4.7
-        ["90.62", "75.63", "30.13", "94.10", "77.69", "27.38"], // GLM-5
-        [null, null, null, null, null, null],                   // doubao-pro (截图为空)
-        [null, null, null, null, null, null],                   // doubao-preview (截图为空)
-        ["88.19", "56.01", "11.22", "88.54", "64.87", "18.48"], // Minimax-m2.1
-        ["85.07", "58.86", "9.62",  "87.50", "59.65", "14.85"], // Minimax-m2.5
-        ["90.97", "69.94", "20.73", "91.67", "75.16", "23.61"], // DeepSeek-v3.2
-        ["93.06", "73.89", "30.02", "93.40", "77.69", "31.73"], // Kimi
-        ["92.01", "85.58", "33.44", "93.06", "86.85", "45.88"], // Claude
-        ["91.67", "82.44", "32.80", "95.14", "89.87", "48.82"]  // Gemini
-    ];
-
-    // ================= 逻辑控制 =================
-
+    // ================= RENDER LOGIC =================
     const thead = document.getElementById('table-head');
     const tbody = document.getElementById('table-body');
     const btnOverall = document.getElementById('btn-overall');
     const btnDifficulty = document.getElementById('btn-difficulty');
 
     function switchView(viewType) {
-        // 1. 更新按钮状态
         if (viewType === 'overall') {
             btnOverall.classList.add('active');
             btnDifficulty.classList.remove('active');
@@ -219,79 +249,90 @@
         }
     }
 
-    // 渲染：总体表格
+    // 1. Render Overall (Cpp Left, Python Right)
     function renderOverallTable() {
-        // 构建表头
         thead.innerHTML = `
             <tr>
                 <th rowspan="2" class="model-col">Model</th>
-                <th colspan="2" style="border-bottom: 1px solid #ccc; border-right:1px solid #eee">Python</th>
-                <th colspan="2" style="border-bottom: 1px solid #ccc;">C++</th>
+                <th colspan="2" style="border-bottom: 1px solid #ccc; border-right:1px solid #ddd">C++</th>
+                <th colspan="2" style="border-bottom: 1px solid #ccc;">Python</th>
             </tr>
             <tr>
                 <th>Pass@1</th>
-                <th style="border-right:1px solid #eee">Pass@8</th>
+                <th style="border-right:1px solid #ddd">Pass@8</th>
                 <th>Pass@1</th>
                 <th>Pass@8</th>
             </tr>
         `;
-        renderBody(overallData);
+
+        tbody.innerHTML = '';
+        sortedData.forEach((item, index) => {
+            const row = document.createElement('tr');
+            // Original Indices: 0=Py1, 1=Py8, 2=Cpp1, 3=Cpp8
+            // Target Order: Cpp1, Cpp8 | Py1, Py8
+            const scores = item.overall;
+            const displayOrder = [2, 3, 0, 1]; 
+
+            let cellsHtml = '';
+            displayOrder.forEach((idx, i) => {
+                const val = scores[idx];
+                const displayScore = val ? val : '<span class="empty-data">-</span>';
+                // Add vertical divider after Cpp columns (index 1 in our new loop)
+                const borderStyle = (i === 1) ? 'border-right:1px solid #ddd;' : '';
+                
+                // Bold the sorting column (Cpp@1)
+                const weightStyle = (idx === 2) ? 'font-weight:700;' : '';
+
+                cellsHtml += `<td class="score-cell" style="${borderStyle} ${weightStyle}">${displayScore}</td>`;
+            });
+
+            row.innerHTML = `<td class="model-name"><span class="rank-badge">${index+1}</span>${item.name}</td>${cellsHtml}`;
+            tbody.appendChild(row);
+        });
     }
 
-    // 渲染：难度表格
+    // 2. Render Difficulty (Cpp Left, Python Right)
     function renderDifficultyTable() {
-        // 构建表头
         thead.innerHTML = `
             <tr>
                 <th rowspan="2" class="model-col">Model</th>
-                <th colspan="3" style="border-bottom: 1px solid #ccc; border-right:1px solid #eee">Python Pass Rate</th>
-                <th colspan="3" style="border-bottom: 1px solid #ccc;">C++ Pass Rate</th>
+                <th colspan="3" style="border-bottom: 1px solid #ccc; border-right:1px solid #ddd">C++ Pass Rate</th>
+                <th colspan="3" style="border-bottom: 1px solid #ccc;">Python Pass Rate</th>
             </tr>
             <tr>
                 <th>Easy</th>
                 <th>Medium</th>
-                <th style="border-right:1px solid #eee">Hard</th>
+                <th style="border-right:1px solid #ddd">Hard</th>
                 <th>Easy</th>
                 <th>Medium</th>
                 <th>Hard</th>
             </tr>
         `;
-        renderBody(difficultyData);
-    }
 
-    // 渲染：数据行（通用）
-    function renderBody(dataSet) {
         tbody.innerHTML = '';
-        
-        modelNames.forEach((name, index) => {
+        sortedData.forEach((item, index) => {
             const row = document.createElement('tr');
-            const scores = dataSet[index];
-            
-            let cellsHtml = '';
-            
-            scores.forEach((score, i) => {
-                // 处理边界线 (比如Python列和CPP列之间的分割)
-                // 如果是难度表(6列数据)，第3列(index 2)后面加竖线
-                // 如果是总体表(4列数据)，第2列(index 1)后面加竖线
-                let borderStyle = '';
-                if (dataSet[0].length === 6 && i === 2) borderStyle = 'border-right:1px solid #eee;';
-                if (dataSet[0].length === 4 && i === 1) borderStyle = 'border-right:1px solid #eee;';
+            // Original Indices: 0-2 (Py), 3-5 (Cpp)
+            // Target Order: 3-5 (Cpp) | 0-2 (Py)
+            const scores = item.difficulty;
+            const displayOrder = [3, 4, 5, 0, 1, 2];
 
-                // 处理空数据
-                const displayScore = score ? score : '<span class="empty-data">-</span>';
+            let cellsHtml = '';
+            displayOrder.forEach((idx, i) => {
+                const val = scores[idx];
+                const displayScore = val ? val : '<span class="empty-data">-</span>';
+                // Add vertical divider after Cpp columns (index 2 in our new loop)
+                const borderStyle = (i === 2) ? 'border-right:1px solid #ddd;' : '';
                 
                 cellsHtml += `<td class="score-cell" style="${borderStyle}">${displayScore}</td>`;
             });
 
-            row.innerHTML = `
-                <td class="model-name">${name}</td>
-                ${cellsHtml}
-            `;
+            row.innerHTML = `<td class="model-name"><span class="rank-badge">${index+1}</span>${item.name}</td>${cellsHtml}`;
             tbody.appendChild(row);
         });
     }
 
-    // 初始化显示总体视图
+    // Initialize
     switchView('overall');
 
 </script>
