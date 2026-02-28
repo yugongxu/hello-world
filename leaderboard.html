@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OJBench Leaderboard</title>
+    <style>
+        /* 基础样式 */
+        body {
+            font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+            color: #333;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            background: white;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-radius: 12px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        /* 按钮组样式 */
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .toggle-btn {
+            padding: 10px 24px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            color: #555;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .toggle-btn:hover {
+            border-color: #bbb;
+            background: #f9f9f9;
+        }
+
+        .toggle-btn.active {
+            background-color: #222;
+            color: white;
+            border-color: #222;
+        }
+
+        /* 表格样式 - 学术风格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+            text-align: center;
+        }
+
+        thead th {
+            font-weight: 700;
+            padding: 12px 8px;
+            background-color: #fff;
+        }
+
+        /* 顶部粗线 */
+        thead tr:first-child th {
+            border-top: 2px solid #000;
+        }
+
+        /* 表头底部分割线 */
+        thead tr:last-child th {
+            border-bottom: 1px solid #000;
+        }
+
+        th.model-col, td.model-name {
+            text-align: left;
+            padding-left: 15px;
+            min-width: 200px;
+        }
+
+        tbody tr td {
+            padding: 10px 8px;
+            color: #444;
+        }
+
+        /* 偶数行斑马纹，增加可读性 */
+        tbody tr:nth-child(even) {
+            background-color: #fcfcfc;
+        }
+
+        tbody tr:hover {
+            background-color: #f0f4f8;
+        }
+
+        /* 底部粗线 */
+        tbody tr:last-child td {
+            border-bottom: 2px solid #000;
+        }
+
+        /* 分数高亮逻辑 (可选) */
+        .score-cell {
+            font-feature-settings: "tnum"; /* 表格数字等宽 */
+        }
+
+        .empty-data {
+            color: #ccc;
+        }
+
+        /* 响应式滚动 */
+        .table-responsive {
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>OJBench Leaderboard</h1>
+
+    <!-- 切换按钮 -->
+    <div class="btn-group">
+        <button class="toggle-btn active" onclick="switchView('overall')" id="btn-overall">
+            总体表现 (Pass@)
+        </button>
+        <button class="toggle-btn" onclick="switchView('difficulty')" id="btn-difficulty">
+            难度细分 (Pass Rate)
+        </button>
+    </div>
+
+    <div class="table-responsive">
+        <table id="leaderboard-table">
+            <thead id="table-head">
+                <!-- 表头通过JS动态生成 -->
+            </thead>
+            <tbody id="table-body">
+                <!-- 数据通过JS动态生成 -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // ================= 数据源配置 =================
+    
+    // 所有的模型名称（保持两张表的顺序一致）
+    const modelNames = [
+        "GLM-4.7",
+        "GLM-5",
+        "doubao-seed-2.0-pro",
+        "doubao-seed-2.0-code-preview",
+        "Minimax-m2.1",
+        "Minimax-m2.5",
+        "DeepSeek-v3.2",
+        "Kimi-2.5-thinking",
+        "claude-opus-4.6-thinking",
+        "Gemini-3.0-pro" // 修正了拼写
+    ];
+
+    // 数据视图 1: 总体 (Pass@1, Pass@8) - 对应截图 1
+    const overallData = [
+        ["50.11", "67.67", "50.75", "68.10"], // GLM-4.7
+        ["55.01", "71.12", "54.88", "71.55"], // GLM-5
+        ["47.22", "59.05", "54.86", "68.10"], // doubao-pro
+        [null, null, null, null],             // doubao-preview (空)
+        ["38.42", "55.17", "45.15", "63.79"], // Minimax-m2.1
+        ["38.09", "53.88", "41.38", "59.48"], // Minimax-m2.5
+        ["48.38", "64.66", "51.72", "69.83"], // DeepSeek-v3.2
+        ["54.74", "72.84", "56.95", "74.14"], // Kimi
+        ["60.27", "72.84", "67.15", "76.72"], // Claude
+        ["58.84", "71.98", "69.99", "79.74"]  // Gemini
+    ];
+
+    // 数据视图 2: 难度 (Easy, Med, Hard) - 对应截图 2
+    // 顺序: Py Easy, Py Med, Py Hard, Cpp Easy, Cpp Med, Cpp Hard
+    const difficultyData = [
+        ["92.71", "70.73", "23.08", "93.06", "75.16", "21.26"], // GLM-4.7
+        ["90.62", "75.63", "30.13", "94.10", "77.69", "27.38"], // GLM-5
+        [null, null, null, null, null, null],                   // doubao-pro (截图为空)
+        [null, null, null, null, null, null],                   // doubao-preview (截图为空)
+        ["88.19", "56.01", "11.22", "88.54", "64.87", "18.48"], // Minimax-m2.1
+        ["85.07", "58.86", "9.62",  "87.50", "59.65", "14.85"], // Minimax-m2.5
+        ["90.97", "69.94", "20.73", "91.67", "75.16", "23.61"], // DeepSeek-v3.2
+        ["93.06", "73.89", "30.02", "93.40", "77.69", "31.73"], // Kimi
+        ["92.01", "85.58", "33.44", "93.06", "86.85", "45.88"], // Claude
+        ["91.67", "82.44", "32.80", "95.14", "89.87", "48.82"]  // Gemini
+    ];
+
+    // ================= 逻辑控制 =================
+
+    const thead = document.getElementById('table-head');
+    const tbody = document.getElementById('table-body');
+    const btnOverall = document.getElementById('btn-overall');
+    const btnDifficulty = document.getElementById('btn-difficulty');
+
+    function switchView(viewType) {
+        // 1. 更新按钮状态
+        if (viewType === 'overall') {
+            btnOverall.classList.add('active');
+            btnDifficulty.classList.remove('active');
+            renderOverallTable();
+        } else {
+            btnDifficulty.classList.add('active');
+            btnOverall.classList.remove('active');
+            renderDifficultyTable();
+        }
+    }
+
+    // 渲染：总体表格
+    function renderOverallTable() {
+        // 构建表头
+        thead.innerHTML = `
+            <tr>
+                <th rowspan="2" class="model-col">Model</th>
+                <th colspan="2" style="border-bottom: 1px solid #ccc; border-right:1px solid #eee">Python</th>
+                <th colspan="2" style="border-bottom: 1px solid #ccc;">C++</th>
+            </tr>
+            <tr>
+                <th>Pass@1</th>
+                <th style="border-right:1px solid #eee">Pass@8</th>
+                <th>Pass@1</th>
+                <th>Pass@8</th>
+            </tr>
+        `;
+        renderBody(overallData);
+    }
+
+    // 渲染：难度表格
+    function renderDifficultyTable() {
+        // 构建表头
+        thead.innerHTML = `
+            <tr>
+                <th rowspan="2" class="model-col">Model</th>
+                <th colspan="3" style="border-bottom: 1px solid #ccc; border-right:1px solid #eee">Python Pass Rate</th>
+                <th colspan="3" style="border-bottom: 1px solid #ccc;">C++ Pass Rate</th>
+            </tr>
+            <tr>
+                <th>Easy</th>
+                <th>Medium</th>
+                <th style="border-right:1px solid #eee">Hard</th>
+                <th>Easy</th>
+                <th>Medium</th>
+                <th>Hard</th>
+            </tr>
+        `;
+        renderBody(difficultyData);
+    }
+
+    // 渲染：数据行（通用）
+    function renderBody(dataSet) {
+        tbody.innerHTML = '';
+        
+        modelNames.forEach((name, index) => {
+            const row = document.createElement('tr');
+            const scores = dataSet[index];
+            
+            let cellsHtml = '';
+            
+            scores.forEach((score, i) => {
+                // 处理边界线 (比如Python列和CPP列之间的分割)
+                // 如果是难度表(6列数据)，第3列(index 2)后面加竖线
+                // 如果是总体表(4列数据)，第2列(index 1)后面加竖线
+                let borderStyle = '';
+                if (dataSet[0].length === 6 && i === 2) borderStyle = 'border-right:1px solid #eee;';
+                if (dataSet[0].length === 4 && i === 1) borderStyle = 'border-right:1px solid #eee;';
+
+                // 处理空数据
+                const displayScore = score ? score : '<span class="empty-data">-</span>';
+                
+                cellsHtml += `<td class="score-cell" style="${borderStyle}">${displayScore}</td>`;
+            });
+
+            row.innerHTML = `
+                <td class="model-name">${name}</td>
+                ${cellsHtml}
+            `;
+            tbody.appendChild(row);
+        });
+    }
+
+    // 初始化显示总体视图
+    switchView('overall');
+
+</script>
+
+</body>
+</html>
